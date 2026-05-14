@@ -85,10 +85,14 @@ def cmd_train(args, cfg):
 
     cfg.feature_mode = args.mode
     cfg.device = args.device
-    cfg.batch_size = args.batch_size
-    cfg.num_epochs = args.epochs
-    cfg.lr = args.lr
-    cfg.experiment_name = args.name
+    if args.batch_size is not None:
+        cfg.batch_size = args.batch_size
+    if args.epochs is not None:
+        cfg.num_epochs = args.epochs
+    if args.lr is not None:
+        cfg.lr = args.lr
+    if args.name is not None:
+        cfg.experiment_name = args.name
     if args.data_root:
         cfg.data_root = args.data_root
         cfg.annotation_dir = os.path.join(args.data_root, "annotations")
@@ -253,11 +257,10 @@ Examples:
                                      help="Train the ST-GAT model")
     p_train.add_argument("--direct", action="store_true",
                         help="Use direct JSON dataset (no preprocessing)")
-    p_train.add_argument("--batch_size", type=int, default=32)
-    p_train.add_argument("--epochs", type=int, default=100)
-    p_train.add_argument("--lr", type=float, default=5e-4)
-    p_train.add_argument("--name", type=str, default="stgnn_ttm_v1",
-                        help="Experiment name")
+    p_train.add_argument("--batch_size", type=int, default=None, help="Overrides config.py")
+    p_train.add_argument("--epochs", type=int, default=None, help="Overrides config.py")
+    p_train.add_argument("--lr", type=float, default=None, help="Overrides config.py")
+    p_train.add_argument("--name", type=str, default=None, help="Experiment name")
 
     # Evaluate
     p_eval = subparsers.add_parser("evaluate", parents=[common],
@@ -280,10 +283,10 @@ Examples:
     # Full pipeline
     p_full = subparsers.add_parser("full", parents=[common],
                                     help="Run full pipeline end-to-end")
-    p_full.add_argument("--batch_size", type=int, default=32)
-    p_full.add_argument("--epochs", type=int, default=100)
-    p_full.add_argument("--lr", type=float, default=5e-4)
-    p_full.add_argument("--name", type=str, default="stgnn_ttm_v1")
+    p_full.add_argument("--batch_size", type=int, default=None, help="Overrides config.py")
+    p_full.add_argument("--epochs", type=int, default=None, help="Overrides config.py")
+    p_full.add_argument("--lr", type=float, default=None, help="Overrides config.py")
+    p_full.add_argument("--name", type=str, default=None)
     p_full.add_argument("--direct", action="store_true")
 
     return parser

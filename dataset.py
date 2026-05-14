@@ -103,15 +103,16 @@ def build_graph(clip_data: dict, cfg: Config) -> Data | None:
     for pid, frame in node_keys:
         feat_parts = []
 
-        # Face features (ResNet-50)
-        if (pid, frame) in face_features:
-            feat_parts.append(face_features[(pid, frame)])
-        elif cfg.feature_mode == "full":
-            feat_parts.append(np.zeros(cfg.face_feat_dim, dtype=np.float32))
+        # Face features (ResNet-50 / DINO)
+        if cfg.feature_mode == "full":
+            if (pid, frame) in face_features:
+                feat_parts.append(face_features[(pid, frame)])
+            else:
+                feat_parts.append(np.zeros(cfg.face_feat_dim, dtype=np.float32))
 
-        # Audio features (MFCC)
-        if audio_features is not None and cfg.feature_mode == "full":
-            if frame < len(audio_features):
+        # Audio features (MFCC / HuBERT)
+        if cfg.feature_mode == "full":
+            if audio_features is not None and frame < len(audio_features):
                 feat_parts.append(audio_features[frame])
             else:
                 feat_parts.append(np.zeros(cfg.audio_feat_dim, dtype=np.float32))
@@ -398,8 +399,8 @@ class TTMGraphDataset(Dataset):
                 edge_index=torch.tensor([[0], [0]], dtype=torch.long),
                 edge_type=torch.tensor([0], dtype=torch.long),
                 y=torch.tensor([0.0]),
-                person_ids=torch.tensor([0]),
-                frame_ids=torch.tensor([0]),
+                person_ids=torch.tensor([-1], dtype=torch.long),
+                frame_ids=torch.tensor([0], dtype=torch.long),
                 num_nodes=1,
             )
             graph.clip_uid = "dummy"
@@ -523,8 +524,8 @@ class TTMGraphDatasetDirect(Dataset):
                 edge_index=torch.tensor([[0], [0]], dtype=torch.long),
                 edge_type=torch.tensor([0], dtype=torch.long),
                 y=torch.tensor([0.0]),
-                person_ids=torch.tensor([0]),
-                frame_ids=torch.tensor([0]),
+                person_ids=torch.tensor([-1], dtype=torch.long),
+                frame_ids=torch.tensor([0], dtype=torch.long),
                 num_nodes=1,
             )
             graph.clip_uid = "dummy"

@@ -74,7 +74,7 @@ class Config:
     # Training
     # ──────────────────────────────────────────────────────────────
     batch_size: int = 2
-    lr: float = 5e-4
+    lr: float = 3e-4
     weight_decay: float = 1e-3   # reduced from 4e-3 — was over-regularizing minority class
     num_epochs: int = 80         # increased from 50 — model needs more time with imbalanced data
     patience: int = 15           # increased from 10 — avoids early exit during slow minority class learning
@@ -85,7 +85,7 @@ class Config:
     # Class imbalance handling
     focal_alpha: float = 0.75     # up-weight positive (TTM=1) class — 0.25 was down-weighting minority
     focal_gamma: float = 2.0      # focusing parameter
-    pos_weight: float = 17.0  # actual ratio: 4778407 neg / 272901 pos ≈ 17.5 (was 12, under-penalizing FN)
+    pos_weight: float = 10.0  # actual ratio: 4778407 neg / 272901 pos ≈ 17.5 (switcing to 10 , over-penalizing FP)
     use_focal_loss: bool = True   # Focal loss handles 17:1 imbalance better
     oversample_positive: bool = True
     oversample_ratio: float = 5.0  # repeat positive clips this many times
