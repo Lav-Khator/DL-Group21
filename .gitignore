@@ -1,3 +1,11 @@
 preprocessed_features/
 __pycache__/
 rice/
+checkpoints/
+logs/
+plots/
+
+*.pth
+*.pt
+*.ckpt
+*.bin
