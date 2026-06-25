@@ -51,7 +51,7 @@ python main.py preprocess --split both --mode lite
 python main.py train --mode full
 ```
 
-Or train directly from JSON annotations (lite mode):
+Or train directly from JSON annotations (lite mode) :
 
 ```bash
 python main.py train --direct --mode lite
