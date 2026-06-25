@@ -7,7 +7,6 @@ import os
 from dataclasses import dataclass, field
 from typing import Optional
 
-
 @dataclass
 class Config:
     # ──────────────────────────────────────────────────────────────
@@ -52,7 +51,6 @@ class Config:
     NUM_EDGE_TYPES: int = 6
 
     headpose_feat_dim: int = 3    # pitch, yaw, roll
-
 
     # ──────────────────────────────────────────────────────────────
     # Model architecture
@@ -135,3 +133,5 @@ class Config:
     @property
     def val_json_path(self) -> str:
         return os.path.join(self.annotation_dir, self.val_annotation)
+
+

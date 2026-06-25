@@ -32,7 +32,6 @@ import os
 import sys
 import time
 from datetime import datetime
-
 from config import Config
 
 
@@ -312,7 +311,6 @@ def main():
     }
 
     commands[args.command](args, cfg)
-
 
 if __name__ == "__main__":
     main()
