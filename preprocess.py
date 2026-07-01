@@ -149,7 +149,7 @@ def expand_bbox(x, y, w, h, pad_ratio: float, img_w: int, img_h: int):
     x2 = min(img_w, int(x + w + pad_w))
     y2 = min(img_h, int(y + h + pad_h))
     return x1, y1, x2, y2
-
+# expand_bbox outputs absolute pixel coordinates for image cropping, while compute_bbox_features outputs a normalized, aspect-aware array for ML model input.
 
 def compute_bbox_features(bbox, img_w: int = 1920, img_h: int = 1080) -> np.ndarray:
     """
@@ -461,7 +461,13 @@ def preprocess_clip_lite(clip_uid: str, entries: list, cfg: Config) -> dict | No
         },
     }
 
-
+def div_trucate0(a,b):
+    """in cpp the division integer automatically truncates to 0 but not the case in python"""
+    if (b==0):
+        return None
+    if (a>0 and b>0):
+        return a//b
+    return (a+b-1)//b
 def preprocess_split(split: str, cfg: Config):
     """Preprocess an entire data split (train or val)."""
     import time
@@ -604,4 +610,4 @@ if __name__ == "__main__":
     if args.split in ("val", "both"):
         preprocess_split("val", cfg)
 
-    print("\nDone! Features saved to:", cfg.feature_dir)
+    print(f"\nDone! Features saved to: {cfg.feature_dir}")
