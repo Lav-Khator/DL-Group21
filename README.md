@@ -80,3 +80,5 @@ python main.py eda
 ```bash
 python main.py full --mode lite
 ```
+
+###contributors-Harshtih
