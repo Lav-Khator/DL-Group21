@@ -28,6 +28,8 @@ from config import Config
 # ─────────────────────────────────────────────────────────────────
 # Graph construction
 # ─────────────────────────────────────────────────────────────────
+def no_op():
+  pass
 
 def build_graph(clip_data: dict, cfg: Config) -> Data | None:
     """
